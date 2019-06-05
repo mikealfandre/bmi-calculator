@@ -1,8 +1,16 @@
 import "package:flutter/material.dart";
 import 'constants.dart';
 import 'reusable_card.dart';
+import 'bottom_button.dart';
 
 class ResultsPage extends StatelessWidget {
+
+  ResultsPage({@required this.bmiResult, @required this.interpretation, @required this.resultText});
+
+  final String bmiResult;
+  final String resultText;
+  final String interpretation;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,28 +22,43 @@ class ResultsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
-            child: Text(
-              'Your Result',
-              style: kTitleTextStyle,
+            child: Container(
+              padding: EdgeInsets.all(15.0),
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                'Your Result',
+                style: kTitleTextStyle,
+              ),
             ),
           ),
           Expanded(
-              flex: 5,
-              child: ReusableCard(
-                  color: kCardColor,
-                  cardChild: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text(
-                        'Normal',
-                        style: kResultsTextStyle,
-                      ),
-                      Text(
-                        '14',
-                        style: kBMITestStyle,
-                      )
-                    ],
-                  )))
+            flex: 5,
+            child: ReusableCard(
+              color: kCardColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    resultText.toUpperCase(),
+                    style: kResultsTextStyle,
+                  ),
+                  Text(
+                    bmiResult,
+                    style: kBMITextStyle,
+                  ),
+                  Text(
+                    interpretation,
+                    style: kResultsTextStyle
+                  ),
+                ],
+              ),
+            ),
+          ),
+          BottomButton(
+              buttonTitle: 'RE-CALCULATE',
+              onTap: () {
+                Navigator.pop(context);
+              }),
         ],
       ),
     );
